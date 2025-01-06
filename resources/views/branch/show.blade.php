@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -47,9 +47,9 @@
     </div>
 
     <!-- Tombol untuk mencetak laporan -->
-    <div class="mt-3">
+    <!-- <div class="mt-3">
         <a href="#" class="btn btn-primary">Cetak Laporan Transaksi</a>
         <a href="#" class="btn btn-secondary">Cetak Laporan Stok</a>
     </div>
 </div>
-@endsection
+@endsection 
