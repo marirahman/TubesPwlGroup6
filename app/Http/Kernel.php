@@ -61,6 +61,18 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'role' => \App\Http\Middleware\CheckRole::class,
+        'role' => \App\Http\Middleware\RoleMiddleware::class, // Tambahkan hanya sekali
+        'role' => \App\Http\Middleware\CheckRole::class, // Tambahkan hanya sekali
+    ];
+
+    /**
+     * Middleware aliases.
+     *
+     * Aliases for middleware that can be used in routing.
+     *
+     * @var array<string, class-string|string>
+     */
+    protected $middlewareAliases = [
+        'role' => \App\Http\Middleware\RoleMiddleware::class, // Dapat digunakan di sini jika menggunakan alias
     ];
 }

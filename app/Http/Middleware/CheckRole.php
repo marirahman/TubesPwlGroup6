@@ -13,13 +13,14 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next, $role)
-    {
-        if (auth()->user()->role !== $role) {
-            return redirect('/')->with('error', 'You do not have access to this page.');
-        }
-    
-        return $next($request);
+    public function handle(Request $request, Closure $next, $role)
+{
+    if (auth()->user()->role !== $role && auth()->user()->role !== 'owner') {
+        return redirect()->route('home')->with('error', 'You do not have access to this page');
     }
+
+    return $next($request);
+}
+
     
 }

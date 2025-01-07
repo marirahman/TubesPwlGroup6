@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
+    public function __construct()
+    {
+        // Cek role owner untuk semua metode
+        $this->middleware(function ($request, $next) {
+            if (auth()->check() && auth()->user()->role !== 'owner') {
+                abort(403, 'Unauthorized access');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $branches = Branch::with('supervisor')->get();
