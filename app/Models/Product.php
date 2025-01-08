@@ -11,12 +11,7 @@ class Product extends Model
 
     // Daftar atribut yang bisa diisi secara massal (mass assignable)
     protected $fillable = [
-        'name',           // Nama produk
-        'sku',            // Kode unik produk (Stock Keeping Unit)
-        'price',          // Harga produk
-        'stock',          // Jumlah stok produk
-        'branch_id',      // ID cabang tempat produk berada
-        'description',    // Deskripsi produk
+        'name', 'code', 'price_buy', 'price_sell', 'stock',
     ];
 
     /**
@@ -24,10 +19,9 @@ class Product extends Model
      * Produk dimiliki oleh satu cabang.
      */
     public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
-
+{
+    return $this->belongsTo(Branch::class, 'branch_id');
+} 
     /**
      * Relasi ke model Transaction.
      * Produk bisa muncul di banyak transaksi.
@@ -37,5 +31,10 @@ class Product extends Model
         return $this->belongsToMany(Transaction::class)
                     ->withPivot('quantity', 'total_price')
                     ->withTimestamps();
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'product_id');
     }
 }

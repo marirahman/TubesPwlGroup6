@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\Branch;
 use App\Models\Product;
+use App\Models\user;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -17,17 +18,21 @@ class TransactionController extends Controller
     }
 
     public function create()
-    {
-        $branches = Branch::all();
-        $products = Product::all();
-        return view('transactions.create', compact('branches', 'products'));
-    }
+{
+    $branches = Branch::all();
+    $users = User::all();
+    $products = Product::all();
+    return view('transactions.create', compact('branches', 'users', 'products'));
+}
+
+
 
     public function store(Request $request)
     {
         $request->validate([
             'branch_id' => 'required|exists:branches,id',
             'user_id' => 'required|exists:users,id',
+            'date' => 'required|date', // Validasi untuk tanggal
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
@@ -42,7 +47,9 @@ class TransactionController extends Controller
         $transaction = Transaction::create([
             'branch_id' => $request->branch_id,
             'user_id' => $request->user_id,
+            'date' => $request->date, // Menyimpan tanggal
             'total_amount' => $totalAmount,
+            'status' => 'Completed', 
         ]);
 
         foreach ($request->products as $item) {
@@ -60,10 +67,11 @@ class TransactionController extends Controller
     }
 
     public function show(Transaction $transaction)
-    {
-        $transaction->load('details.product');
-        return view('transactions.show', compact('transaction'));
-    }
+{
+    $transaction->load('items.product'); // Pastikan memuat relasi items dan product
+    return view('transactions.show', compact('transaction'));
+}
+
 
     public function edit(Transaction $transaction)
     {

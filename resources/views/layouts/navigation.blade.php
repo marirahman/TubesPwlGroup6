@@ -17,34 +17,26 @@
                     </x-nav-link>
 
                     @if(auth()->user()->role === 'owner')
-                        <x-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.index')">
-                            {{ __('Kelola Cabang') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
-                            {{ __('Kelola Produk') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                            {{ __('Kelola Pengguna') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
-                            {{ __('Laporan Transaksi') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('transactions.create')" :active="request()->routeIs('transactions.create')">
-                            {{ __('Buat Transaksi') }}
-                        </x-nav-link>
-                    @elseif(auth()->user()->hasRole('manager') || auth()->user()->hasRole('supervisor'))
-                        <x-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
-                            {{ __('Laporan Transaksi') }}
-                        </x-nav-link>
-                    @elseif(auth()->user()->hasRole('cashier'))
-                        <x-nav-link :href="route('transactions.create')" :active="request()->routeIs('transactions.create')">
-                            {{ __('Buat Transaksi') }}
-                        </x-nav-link>
-                    @elseif(auth()->user()->hasRole('warehouse'))
-                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
-                            {{ __('Kelola Stok Barang') }}
-                        </x-nav-link>
-                    @endif
+                    <x-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.index')">
+                        {{ __('Kelola Cabang') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                        {{ __('Kelola Produk') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Kelola Pengguna') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
+                        {{ __('Laporan Transaksi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('reports.stock')" :active="request()->routeIs('reports.stock')">
+                        {{ __('Laporan Stok') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index ')">
+                        {{ __('Buat Transaksi') }}
+                    </x-nav-link>
+                @endif
+
                 </div>
             </div>
 
@@ -111,11 +103,14 @@
                 <x-responsive-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
                     {{ __('Laporan Transaksi') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('transactions.create')" :active="request()->routeIs('transactions.create')">
+                <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
                     {{ __('Buat Transaksi') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                     {{ __('Kelola Stok Barang') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('reports.stock')" :active="request()->routeIs('reports.stock')">
+                    {{ __('Laporan Stok') }}
                 </x-responsive-nav-link>
             @endif
 
