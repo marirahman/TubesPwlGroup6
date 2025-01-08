@@ -8,6 +8,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 // Welcome page
 Route::get('/', function () {
@@ -39,6 +40,7 @@ Route::resource('products', ProductController::class);
 
 // Rute untuk users (diakses oleh semua pengguna)
 Route::resource('users', ProfileController::class);
+Route::resource('users', UserController::class);
 
 // Rute untuk admin (diakses oleh semua pengguna)
 // Route::get('/admin/branches', [AdminController::class, 'manageBranches'])->name('admin.branches');
@@ -51,8 +53,6 @@ Route::prefix('reports')->group(function () {
     Route::get('/stock', [ReportController::class, 'stock'])->name('reports.stock');
 });
 
-Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 
 
 // Rute untuk transactions (diakses oleh semua pengguna)
