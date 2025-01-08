@@ -2,32 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction; // Pastikan ini ada
-use App\Models\Product;     // Jika model ini digunakan
+use App\Models\Transaction; 
+use App\Models\Product;    
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Import Auth untuk pengecekan otentikasi
+use Illuminate\Support\Facades\Auth; 
 
 class DashboardController extends Controller
 {
-    // Menambahkan middleware 'auth' untuk memastikan pengguna terautentikasi
+    /**
+     * Constructor untuk memastikan middleware auth digunakan.
+     */
     public function __construct()
     {
-        $this->middleware('auth');  // Ini memastikan hanya user yang sudah login yang bisa mengakses
+        $this->middleware('auth'); 
     }
 
+    /**
+     * Fungsi untuk mengarahkan pengguna ke dashboard berdasarkan role.
+     */
     public function index()
     {
-        // Cek apakah user yang terautentikasi adalah admin atau owner
-        if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('owner')) {
+        $user = Auth::user(); 
+
+        
+        if ($user->hasRole('owner')) {
             $totalTransactions = Transaction::count();
             $totalProducts = Product::count();
             $totalRevenue = Transaction::sum('total_amount');
-    
+
             return view('dashboard', compact('totalTransactions', 'totalProducts', 'totalRevenue'));
+        } elseif ($user->hasRole('cashier')) {
+            return redirect()->route('dashboard.cashier');
+        } elseif ($user->hasRole('manager')) {
+            return redirect()->route('dashboard.manager');
+        } elseif ($user->hasRole('supervisor')) {
+            return redirect()->route('dashboard.supervisor');
+        } elseif ($user->hasRole('warehouse')) {
+            return redirect()->route('dashboard.warehouse');
         }
-    
-        // Jika bukan admin atau owner, tampilkan halaman error 403
+
+       
         abort(403, 'Anda tidak memiliki izin untuk mengakses halaman ini.');
     }
-    
 }

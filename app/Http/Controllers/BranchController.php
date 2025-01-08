@@ -12,16 +12,16 @@ use Carbon\Carbon;
 
 class BranchController extends Controller
 {
-    public function __construct()
-    {
-        // Middleware untuk membatasi akses hanya untuk pengguna dengan role 'owner'
-        $this->middleware(function ($request, $next) {
-            if (auth()->check() && auth()->user()->role !== 'owner') {
-                abort(403, 'Unauthorized access');
-            }
-            return $next($request);
-        });
-    }
+    // public function __construct()
+    // {
+    //     // Middleware untuk membatasi akses hanya untuk pengguna dengan role 'owner'
+    //     $this->middleware(function ($request, $next) {
+    //         if (auth()->check() && auth()->user()->role !== 'owner') {
+    //             abort(403, 'Unauthorized access');
+    //         }
+    //         return $next($request);
+    //     });
+    // }
 
     // Menampilkan daftar cabang
     public function index()

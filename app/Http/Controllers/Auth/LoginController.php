@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard'; // Default redirect to dashboard
+    // protected $redirectTo = '/dashboard'; // Default redirect to dashboard
 
     /**
      * Create a new controller instance.
@@ -51,19 +51,18 @@ class LoginController extends Controller
     {
         // Cek role pengguna dan arahkan sesuai dengan role mereka
         if ($user->hasRole('owner')) {
-            // Owner memiliki akses ke semua bagian, arahkan ke dashboard utama atau halaman khusus owner
-            return redirect()->route('owner.dashboard');
-        } elseif ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
+        } elseif ($user->hasRole('cashier')) {
+            return redirect()->route('dashboard.cashier');
         } elseif ($user->hasRole('supervisor')) {
-            return redirect()->route('supervisor.dashboard');
-        } elseif ($user->hasRole('kasir')) {
-            return redirect()->route('kasir.dashboard');
-        } elseif ($user->hasRole('gudang')) {
-            return redirect()->route('gudang.dashboard');
+            return redirect()->route('dashboard.supervisor');
+        } elseif ($user->hasRole('warehouse')) {
+            return redirect()->route('dashboard.warehouse');
+        } elseif ($user->hasRole('manager')) {
+            return redirect()->route('dashboard.manager');
         }
 
         // Default redirect jika role tidak cocok
-        return redirect()->route('home');
+        return redirect()->route('welcome');
     }
 }

@@ -25,6 +25,22 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/cashier', function () {
+    return view('dashboardcashier');
+})->name('dashboard.cashier');
+
+Route::get('/dashboard/manager', function () {
+    return view('dashboardmanager');
+})->name('dashboard.manager');
+
+Route::get('/dashboard/supervisor', function () {
+    return view('dashboardsupervisor');
+})->name('dashboard.supervisor');
+
+Route::get('/dashboard/warehouse', function () {
+    return view('dashboardwarehouse');
+})->name('dashboard.warehouse');
+
 
 // Profile routes (diakses oleh semua pengguna)
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
