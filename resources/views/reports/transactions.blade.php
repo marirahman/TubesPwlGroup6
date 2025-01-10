@@ -14,35 +14,41 @@
                     <!-- Table -->
                     <div class="overflow-x-auto">
                         <table class="min-w-full table-auto border-collapse border border-blue-300">
-                            <thead class="bg-blue-700 text-white">
-                                <tr>
-                                    <th class="px-4 py-2 border border-blue-300 text-left">#</th>
-                                    <th class="px-4 py-2 border border-blue-300 text-left">Transaction ID</th>
-                                    <th class="px-4 py-2 border border-blue-300 text-left">Date</th>
-                                    <th class="px-4 py-2 border border-blue-300 text-left">Total Amount</th>
-                                    <th class="px-4 py-2 border border-blue-300 text-left">Status</th>
+                        <thead class="bg-blue-700 text-white">
+                            <tr>
+                                <th class="px-4 py-2 border border-blue-300 text-left">#</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Transaction ID</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">User</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Product</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Branch</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Date</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Total Amount</th>
+                                <th class="px-4 py-2 border border-blue-300 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            @forelse($transactions as $index => $transaction)
+                                <tr class="hover:bg-blue-100 text-black">
+                                    <td class="px-4 py-2 border border-blue-300">{{ $index + 1 }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">{{ $transaction->id }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">{{ $transaction->user->name }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">{{ $transaction->product->name ?? 'No Product' }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">{{ $transaction->branch->name ?? 'No Branch' }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">{{ $transaction->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($transaction->total_amount, 2) }}</td>
+                                    <td class="px-4 py-2 border border-blue-300">
+                                        <span style="color: black;">
+                                            {{ $transaction->status ?? 'Selesai' }}
+                                        </span>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                @forelse($transactions as $index => $transaction)
-                                    <tr class="hover:bg-blue-100 text-black">
-                                        <td class="px-4 py-2 border border-blue-300">{{ $index + 1 }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">{{ $transaction->id }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">{{ $transaction->created_at->format('Y-m-d H:i:s') }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($transaction->total_amount, 2) }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">
-                                            <span class="inline-block px-3 py-1 text-sm font-medium rounded-md 
-                                                {{ $transaction->status == 'Completed' ? 'bg-green-600 text-black' : 'bg-yellow-600 text-black' }}">
-                                                {{ $transaction->status }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center text-black px-4 py-2">No transactions available.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-black px-4 py-2">No transactions available.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
                         </table>
                     </div>
                 </div>

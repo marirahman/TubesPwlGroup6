@@ -10,6 +10,7 @@ class Transaction extends Model
 
 
     protected $fillable = [
+        'product_id',
         'branch_id',
         'user_id',
         'total_amount',
@@ -26,6 +27,11 @@ class Transaction extends Model
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
     
+    // App\Models\Transaction.php
+    public function stoks()
+    {
+        return $this->belongsTo(Stock::class, 'stock_id');
+    }
 
     
     public function user()
@@ -33,4 +39,11 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
     
+    // Di model Transaction.php
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+
 }

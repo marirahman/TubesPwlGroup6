@@ -30,6 +30,12 @@ class Branch extends Model
     {
         return $this->hasMany(Stock::class, 'branch_id', 'id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     
 
 }

@@ -29,16 +29,18 @@
                                     <tr class="hover:bg-blue-100 text-black">
                                         <td class="px-4 py-2 border border-blue-300">{{ $index + 1 }}</td>
                                         <td class="px-4 py-2 border border-blue-300">{{ $product->name }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">{{ $product->stoks->quantity ?? 0 }}</td>
+                                        <td class="px-4 py-2 border border-blue-300">
+                                            {{ $product->stocks->sum('quantity') ?? 0 }}
+                                        </td>
                                         <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($product->price_sell, 2) }}</td>
                                         <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($product->price_buy, 2) }}</td>
                                         <td class="px-4 py-2 border border-blue-300">
-                                                    @if($product->stoks && $product->stoks->branch)
-                                                        {{ $product->stoks->branch->name }}
-                                                    @else
-                                                        Unknown
-                                                    @endif
-                                                </td>
+                                            @if($product->stocks->isNotEmpty() && $product->stocks->first()->branch)
+                                                {{ $product->stocks->first()->branch->name }}
+                                            @else
+                                                Unknown
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -46,7 +48,6 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

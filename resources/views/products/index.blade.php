@@ -15,7 +15,7 @@
                     <table class="min-w-full divide-y divide-blue-400 dark:divide-blue-800 mt-4">
                         <thead class="bg-blue-600 dark:bg-blue-900">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-300 uppercase tracking-wider">#</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-300 uppercase tracking-wider">Product ID</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-300 uppercase tracking-wider">Code</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-300 uppercase tracking-wider">Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-300 uppercase tracking-wider">Stock</th>
@@ -27,7 +27,7 @@
                         <tbody class="bg-white dark:bg-blue-800 divide-y divide-blue-400 dark:divide-blue-800">
                             @forelse($products as $index => $product)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-blue-200">{{ $index + 1 }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-blue-200">{{ $product->id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-blue-200">{{ $product->code }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-blue-200">{{ $product->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-blue-200">

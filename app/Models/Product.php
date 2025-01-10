@@ -18,10 +18,12 @@ class Product extends Model
      * Relasi ke model Branch (Cabang).
      * Produk dimiliki oleh satu cabang.
      */
-    public function branch()
+  // Product.php
+public function branch()
 {
-    return $this->belongsTo(Branch::class, 'name');
-} 
+    return $this->belongsTo(Branch::class, 'branch_id', 'id');
+}
+
     /**
      * Relasi ke model Transaction.
      * Produk bisa muncul di banyak transaksi.
@@ -33,9 +35,12 @@ class Product extends Model
                     ->withTimestamps();
     }
 
-    public function stoks()
-{
-    return $this->hasOne(Stock::class);
-}
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'product_id', 'id');
+    }
+
+
 
 }

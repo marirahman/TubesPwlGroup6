@@ -13,9 +13,12 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with(['branch', 'user'])->get();
+        $transactions = Transaction::with(['product', 'branch', 'user'])->get();
         return view('transactions.index', compact('transactions'));
     }
+
+    
+
 
     public function create()
 {
@@ -45,6 +48,7 @@ class TransactionController extends Controller
         }
 
         $transaction = Transaction::create([
+            'product_id' => $product->id,
             'branch_id' => $request->branch_id,
             'user_id' => $request->user_id,
             'date' => $request->date, // Menyimpan tanggal
