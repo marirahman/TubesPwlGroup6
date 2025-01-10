@@ -44,7 +44,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center text-black px-4 py-2">No transactions available.</td>
+                                    <td colspan="8" class="text-center text-black px-4 py-2">No transactions available.</td>
                                 </tr>
                             @endforelse
                         </tbody>

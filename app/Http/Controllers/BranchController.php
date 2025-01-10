@@ -49,29 +49,41 @@ class BranchController extends Controller
     }
 
     // Menampilkan detail cabang tertentu
-    public function show(Branch $branch)
-{
-    // Ambil transaksi terkait branch
-    $transactions = Transaction::where('branch_id', $branch->id)
-        ->select('created_at as transaction_date', 'total_amount as total')
-        ->get()
-        ->map(function ($transaction) {
-            $transaction->transaction_date = $transaction->transaction_date
-                ? Carbon::parse($transaction->transaction_date)->format('Y-m-d H:i:s') 
-                : 'N/A';
-            return $transaction;
+    public function show($branchId)
+    {
+        // Ambil data cabang dan transaksi dengan eager loading
+        $branch = Branch::with(['transactions.product', 'transactions.product.stocks'])->findOrFail($branchId);
+    
+        // Map transaksi untuk menambahkan nama produk dan tanggal transaksi
+        $transactions = $branch->transactions->map(function ($transaction) {
+            // Ambil nama produk dari transaksi
+            $productName = optional($transaction->product)->name ?? 'Unknown Product';
+    
+            // Ambil stok produk terkait jika ada
+            $stockQuantity = optional($transaction->product->stocks->first())->quantity ?? 'N/A';
+    
+            return (object) [
+                'product_name' => $productName,
+                'transaction_date' => $transaction->created_at
+                    ? Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s')
+                    : 'N/A',
+                'total' => $transaction->total_amount, // Pastikan total_amount benar
+                'stock_quantity' => $stockQuantity,
+            ];
         });
-
-    // Ambil stok barang terkait branch
-    $stocks = Stock::where('branch_id', $branch->id)
-        ->join('products', 'stocks.product_id', '=', 'products.id')
-        ->select('products.name as product_name', 'stocks.quantity')
-        ->get();
-
-    // Kirim data ke view
-    return view('branches.show', compact('branch', 'transactions', 'stocks'));
-}
-
+    
+        // Ambil data stok barang untuk cabang
+        $stocks = $branch->stocks->map(function ($stock) {
+            return (object) [
+                'product_name' => optional($stock->product)->name ?? 'Unknown Product',
+                'quantity' => $stock->quantity,
+            ];
+        });
+    
+        // Kirim data ke view
+        return view('branches.show', compact('branch', 'transactions', 'stocks'));
+    }
+    
     // Menampilkan form edit cabang
     public function edit(Branch $branch)
     {

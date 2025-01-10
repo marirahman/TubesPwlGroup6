@@ -18,21 +18,23 @@
                             <table class="min-w-full divide-y divide-blue-300">
                                 <thead class="bg-blue-700">
                                     <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">Product</th>
                                         <th class="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">Tanggal Transaksi</th>
                                         <th class="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white text-black">
-                                    @forelse ($transactions as $transaction)
-                                        <tr>
-                                            <td class="px-4 py-2 text-sm">{{ optional($transaction->transaction_date)->format('Y-m-d') ?? 'N/A' }}</td>
-                                            <td class="px-4 py-2 text-sm">Rp {{ number_format($transaction->total, 2) }}</td>
-                                        </tr>
+                                @forelse ($transactions as $transaction)
+                                <tr>
+                                    <td class="px-4 py-2 text-sm">{{ $transaction->product_name }}</td>
+                                    <td class="px-4 py-2 text-sm">{{ $transaction->transaction_date }}</td>
+                                    <td class="px-4 py-2 text-sm">Rp {{ number_format($transaction->total, 2) }}</td>
+                                </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="2" class="px-4 py-2 text-center text-sm">Tidak ada transaksi.</td>
-                                        </tr>
-                                    @endforelse
+                                    <tr>
+                                        <td colspan="3" class="px-4 py-2 text-center text-sm">Tidak ada transaksi. </td>
+                                    </tr>
+                                @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -47,16 +49,16 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white text-black">
-                                    @forelse ($stocks as $stock)
-                                        <tr>
-                                            <td class="px-4 py-2 text-sm">{{ optional($stock->product)->name ?? 'Unknown Product' }}</td>
-                                            <td class="px-4 py-2 text-sm">{{ $stock->quantity }}</td>
-                                        </tr>
+                                @forelse ($stocks as $stock)
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">{{ $stock->product_name }}</td>
+                                        <td class="px-4 py-2 text-sm">{{ $stock->quantity }}</td>
+                                    </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="2" class="px-4 py-2 text-center text-sm">Tidak ada stok barang.</td>
-                                        </tr>
-                                    @endforelse
+                                    <tr>
+                                        <td colspan="2" class="px-4 py-2 text-center text-sm">Tidak ada stok barang.</td>
+                                    </tr>
+                                 @endforelse
                                 </tbody>
                             </table>
                         </div>

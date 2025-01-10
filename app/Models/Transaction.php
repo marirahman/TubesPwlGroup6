@@ -28,9 +28,9 @@ class Transaction extends Model
     }
     
     // App\Models\Transaction.php
-    public function stoks()
+    public function stock()
     {
-        return $this->belongsTo(Stock::class, 'stock_id');
+        return $this->belongsTo(Stock::class);
     }
 
     
