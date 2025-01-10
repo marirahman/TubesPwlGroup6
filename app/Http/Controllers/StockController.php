@@ -19,4 +19,5 @@ class StockController extends Controller
     return redirect()->route('stocks.index');
 }
 
+
 }

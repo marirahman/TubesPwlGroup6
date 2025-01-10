@@ -20,7 +20,7 @@ class Product extends Model
      */
     public function branch()
 {
-    return $this->belongsTo(Branch::class, 'branch_id');
+    return $this->belongsTo(Branch::class, 'name');
 } 
     /**
      * Relasi ke model Transaction.
@@ -33,8 +33,9 @@ class Product extends Model
                     ->withTimestamps();
     }
 
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class, 'product_id');
-    }
+    public function stoks()
+{
+    return $this->hasOne(Stock::class);
+}
+
 }

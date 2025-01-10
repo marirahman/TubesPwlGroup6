@@ -21,6 +21,7 @@
                                     <th class="px-4 py-2 border border-blue-300 text-left">Stock Quantity</th>
                                     <th class="px-4 py-2 border border-blue-300 text-left">Price (Sell)</th>
                                     <th class="px-4 py-2 border border-blue-300 text-left">Price (Buy)</th>
+                                    <th class="px-4 py-2 border border-blue-300 text-left">Branch</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
@@ -28,13 +29,20 @@
                                     <tr class="hover:bg-blue-100 text-black">
                                         <td class="px-4 py-2 border border-blue-300">{{ $index + 1 }}</td>
                                         <td class="px-4 py-2 border border-blue-300">{{ $product->name }}</td>
-                                        <td class="px-4 py-2 border border-blue-300">{{ $product->stock }}</td>
+                                        <td class="px-4 py-2 border border-blue-300">{{ $product->stoks->quantity ?? 0 }}</td>
                                         <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($product->price_sell, 2) }}</td>
                                         <td class="px-4 py-2 border border-blue-300">Rp {{ number_format($product->price_buy, 2) }}</td>
+                                        <td class="px-4 py-2 border border-blue-300">
+                                                    @if($product->stoks && $product->stoks->branch)
+                                                        {{ $product->stoks->branch->name }}
+                                                    @else
+                                                        Unknown
+                                                    @endif
+                                                </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center text-black px-4 py-2">No products available.</td>
+                                        <td colspan="6" class="text-center text-black px-4 py-2">No products available.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

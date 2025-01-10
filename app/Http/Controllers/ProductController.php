@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         $products = Product::with('stocks')->get();
         return view('products.index', compact('products'));
+        
     }
 
     // Menampilkan halaman form tambah produk
